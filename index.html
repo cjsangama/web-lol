@@ -2,34 +2,38 @@
 <html>
 
 <head>
-<title>Mi web de League of Legends</title>
+<title>Buscador de Campeones LoL</title>
 
 <style>
 
 body{
 background:#0a0a0f;
 color:#d4af37;
-font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-family:Arial;
 text-align:center;
 }
 
-h1{
-margin-top:30px;
+input{
+padding:10px;
+width:300px;
+margin-top:20px;
+border-radius:5px;
+border:none;
 }
 
 .container{
 display:flex;
+flex-wrap:wrap;
 justify-content:center;
-gap:30px;
+gap:25px;
 margin-top:40px;
 }
 
 .card{
 background:#111;
 border-radius:10px;
-width:300px;
-padding:15px;
-box-shadow:0 0 10px rgba(0,0,0,0.8);
+width:250px;
+padding:10px;
 transition:0.3s;
 }
 
@@ -49,29 +53,58 @@ border-radius:8px;
 
 <body>
 
-<h1>Mis campeones favoritos</h1>
+<h1>Buscador de Campeones</h1>
 
-<div class="container">
+<input type="text" id="search" placeholder="Buscar campeón...">
+
+<div class="container" id="champions">
 
 <div class="card">
 <h2>Rengar</h2>
 <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_0.jpg">
-<p>El cazador definitivo de la jungla.</p>
 </div>
 
 <div class="card">
 <h2>Kayn</h2>
 <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kayn_0.jpg">
-<p>Asesino que domina la sombra.</p>
+</div>
+
+<div class="card">
+<h2>Kassadin</h2>
+<img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kassadin_0.jpg">
 </div>
 
 <div class="card">
 <h2>Volibear</h2>
 <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Volibear_0.jpg">
-<p>El dios del trueno de Freljord.</p>
 </div>
 
 </div>
+
+<script>
+
+const search = document.getElementById("search");
+const cards = document.querySelectorAll(".card");
+
+search.addEventListener("keyup", function(){
+
+let text = search.value.toLowerCase();
+
+cards.forEach(function(card){
+
+let name = card.innerText.toLowerCase();
+
+if(name.includes(text)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+
+});
+
+});
+
+</script>
 
 </body>
 
