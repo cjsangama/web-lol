@@ -53,56 +53,65 @@ border-radius:8px;
 
 <body>
 
-<h1>Buscador de Campeones</h1>
+<h1>Buscador de Campeones LoL</h1>
 
 <input type="text" id="search" placeholder="Buscar campeón...">
 
-<div class="container" id="champions">
-
-<div class="card">
-<h2>Rengar</h2>
-<img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rengar_0.jpg">
-</div>
-
-<div class="card">
-<h2>Kayn</h2>
-<img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kayn_0.jpg">
-</div>
-
-<div class="card">
-<h2>Kassadin</h2>
-<img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kassadin_0.jpg">
-</div>
-
-<div class="card">
-<h2>Volibear</h2>
-<img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Volibear_0.jpg">
-</div>
-
-</div>
+<div class="container" id="champions"></div>
 
 <script>
 
-const search = document.getElementById("search");
-const cards = document.querySelectorAll(".card");
+const container = document.getElementById("champions")
+const search = document.getElementById("search")
+
+let championsData = []
+
+async function loadChampions(){
+
+let response = await fetch("https://ddragon.leagueoflegends.com/cdn/13.24.1/data/en_US/champion.json")
+
+let data = await response.json()
+
+championsData = Object.values(data.data)
+
+displayChampions(championsData)
+
+}
+
+function displayChampions(champions){
+
+container.innerHTML=""
+
+champions.forEach(champion => {
+
+let card = document.createElement("div")
+
+card.classList.add("card")
+
+card.innerHTML = `
+<h2>${champion.name}</h2>
+<img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg">
+`
+
+container.appendChild(card)
+
+})
+
+}
 
 search.addEventListener("keyup", function(){
 
-let text = search.value.toLowerCase();
+let text = search.value.toLowerCase()
 
-cards.forEach(function(card){
+let filtered = championsData.filter(champion =>
+champion.name.toLowerCase().includes(text)
+)
 
-let name = card.innerText.toLowerCase();
+displayChampions(filtered)
 
-if(name.includes(text)){
-card.style.display="block";
-}else{
-card.style.display="none";
-}
+})
 
-});
-
-});
+loadChampions()
 
 </script>
 
